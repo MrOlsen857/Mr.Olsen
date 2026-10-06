@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--PAGE-->
+<title>Piro web</title>
+<meta name="description" content="Piro web er et webbyrå som lager raske, moderne nettsider for små og mellomstore bedrifter. Fast pris, synlig på Google, og du eier alt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800;900&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: venstrejustert hero med stor typografi og et «glødende» nettlesermotiv; rolige seksjoner under, én varm aksent. */
+:root {
+  --bg: #F5F6F8;
+  --surface: #FFFFFF;
+  --ink: #16181D;
+  --muted: #565B66;
+  --line: #DFE2E8;
+  --ember: #C9381A;
+  --ember-ink: #FFFFFF;
+  --glow: #F4A31F;
+  --soft: #FBE9E2;
+  --display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --wrap: 72rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111317; --surface: #1A1D23; --ink: #ECEEF2; --muted: #A3A9B5; --line: #2C3039;
+    --ember: #FF6B42; --ember-ink: #16181D; --glow: #F7B544; --soft: #2A1C18; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111317; --surface: #1A1D23; --ink: #ECEEF2; --muted: #A3A9B5; --line: #2C3039;
+  --ember: #FF6B42; --ember-ink: #16181D; --glow: #F7B544; --soft: #2A1C18; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+img, svg { max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.08; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--ember); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2rem); }
+.eyebrow { font-family: var(--mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ember); }
+.lede { color: var(--muted); max-width: 38rem; }
+
+/* Knapper */
+.btn { display: inline-flex; align-items: center; gap: .5rem; padding: .85rem 1.3rem; border-radius: 999px; font: 600 1rem/1 var(--body); text-decoration: none; cursor: pointer; border: 2px solid transparent; transition: transform .18s ease, background-color .18s ease, border-color .18s ease; }
+.btn-primary { background: var(--ember); color: var(--ember-ink); }
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-ghost { border-color: var(--line); color: var(--ink); background: transparent; }
+.btn-ghost:hover { border-color: var(--ink); }
+
+/* Topp */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 1.5rem; padding-block: .85rem; }
+.brand { display: flex; align-items: center; gap: .5rem; font: 900 1.3rem/1 var(--display); text-decoration: none; letter-spacing: -.02em; }
+.brand svg { width: 1.6rem; height: 1.6rem; }
+.nav { display: flex; gap: 1.4rem; margin-left: auto; }
+.nav a { text-decoration: none; color: var(--muted); font-weight: 500; }
+.nav a:hover { color: var(--ink); }
+.top .btn { padding: .6rem 1rem; font-size: .92rem; }
+@media (max-width: 760px) { .nav { display: none; } .top .btn { margin-left: auto; } }
+
+/* Hero */
+.hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; padding-block: clamp(3rem, 8vw, 6rem); }
+.hero h1 { font-size: clamp(2.6rem, 6.4vw, 5rem); font-weight: 900; letter-spacing: -.035em; margin-block: 1rem 1.4rem; }
+.hero h1 em { font-style: normal; background: linear-gradient(100deg, var(--ember) 10%, var(--glow) 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero .lede { font-size: 1.15rem; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+.hero > .wrap > div { min-width: 0; }
+
+.browser { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 1rem; isolation: isolate; }
+.browser::before { content: ""; position: absolute; inset: 12% -8% -10% 10%; z-index: -1; background: radial-gradient(closest-side, color-mix(in srgb, var(--glow) 55%, transparent), color-mix(in srgb, var(--ember) 30%, transparent) 55%, transparent); filter: blur(30px); animation: ember 6s ease-in-out infinite alternate; }
+@keyframes ember { from { opacity: .65; transform: scale(.96); } to { opacity: 1; transform: scale(1.04); } }
+.dots { display: flex; gap: .35rem; margin-bottom: .9rem; }
+.dots i { width: .6rem; height: .6rem; border-radius: 50%; background: var(--line); }
+.url { font-family: var(--mono); font-size: .75rem; color: var(--muted); background: var(--bg); border-radius: 8px; padding: .4rem .7rem; margin-bottom: 1.2rem; }
+.gauges { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; }
+.gauge { text-align: center; }
+.gauge svg { width: 100%; max-width: 6rem; }
+.gauge .track { fill: none; stroke: var(--line); stroke-width: 8; }
+.gauge .val { fill: none; stroke: var(--ember); stroke-width: 8; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; }
+.gauge text { fill: var(--ink); font: 800 22px var(--display); }
+.gauge span { display: block; font-size: .82rem; color: var(--muted); margin-top: .3rem; }
+.browser-note { font-family: var(--mono); font-size: .72rem; color: var(--muted); margin-top: 1.1rem; border-top: 1px dashed var(--line); padding-top: .8rem; }
+@media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } }
+
+/* Seksjoner */
+section.block .wrap { padding-block: clamp(3.5rem, 8vw, 6rem); }
+.section-head { display: grid; gap: .8rem; margin-bottom: 2.6rem; max-width: 44rem; }
+.section-head h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -.025em; }
+
+.why { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.why article { display: grid; gap: .7rem; align-content: start; border-top: 3px solid var(--ink); padding-top: 1.3rem; }
+.why svg { width: 2rem; height: 2rem; stroke: var(--ember); }
+.why h3 { font-size: 1.35rem; font-weight: 800; }
+.why p { color: var(--muted); }
+
+.services { background: var(--surface); border-block: 1px solid var(--line); }
+.svc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+.svc { background: var(--surface); padding: clamp(1.4rem, 3vw, 2.2rem); display: grid; gap: .6rem; align-content: start; }
+.svc h3 { font-size: 1.3rem; font-weight: 800; }
+.svc p { color: var(--muted); }
+.svc ul { margin: .4rem 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: .45rem; }
+.svc li { font-family: var(--mono); font-size: .72rem; background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: .25rem .65rem; }
+
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6rem; counter-reset: s; list-style: none; margin: 0; padding: 0; }
+.steps li { display: grid; gap: .5rem; align-content: start; }
+.steps li::before { counter-increment: s; content: "0" counter(s); font: 900 2.6rem/1 var(--display); color: var(--ember); letter-spacing: -.03em; }
+.steps h3 { font-size: 1.15rem; font-weight: 800; }
+.steps p { color: var(--muted); font-size: .98rem; }
+.steps small { font-family: var(--mono); font-size: .72rem; color: var(--muted); }
+
+.cta-band { background: var(--ink); color: var(--bg); }
+.cta-band .wrap { display: flex; flex-wrap: wrap; gap: 1.6rem 3rem; align-items: center; justify-content: space-between; padding-block: clamp(3rem, 6vw, 4.5rem); }
+.cta-band h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; letter-spacing: -.03em; max-width: 30rem; }
+.cta-band p { color: color-mix(in srgb, var(--bg) 70%, var(--ink)); margin-top: .6rem; }
+.cta-band .btn-primary:hover { background: var(--glow); color: var(--ink); }
+
+.about { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+.about > div { min-width: 0; display: grid; gap: 1rem; }
+.about p { color: var(--muted); }
+.facts { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.facts div { display: flex; justify-content: space-between; gap: 1rem; padding-block: .9rem; border-bottom: 1px solid var(--line); }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; font-weight: 600; text-align: right; }
+
+.contact { background: var(--soft); }
+.contact .wrap > .grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(2rem, 5vw, 4rem); }
+.contact .grid > div { min-width: 0; display: grid; gap: 1rem; align-content: start; }
+.contact-line { font-family: var(--mono); font-size: .9rem; user-select: all; }
+form { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: clamp(1.3rem, 3vw, 2rem); display: grid; gap: 1rem; }
+label { display: grid; gap: .35rem; font-weight: 600; font-size: .95rem; }
+input, select, textarea { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: .75rem .9rem; width: 100%; }
+textarea { min-height: 7rem; resize: vertical; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-msg { font-weight: 600; color: var(--ember); }
+@media (max-width: 860px) {
+  .why, .steps { grid-template-columns: 1fr 1fr; }
+  .about, .contact .wrap > .grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .why, .steps, .svc-grid, .row2 { grid-template-columns: 1fr; }
+}
+
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding-block: 2rem; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .browser::before { animation: none; }
+  .btn { transition: none; }
+}
+</style>
+<!--/PAGE-->
+</head>
+<body>
+<!--BODY-->
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Piro web, til forsiden">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="fl" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="var(--ember)"/><stop offset="1" stop-color="var(--glow)"/></linearGradient></defs><path fill="url(#fl)" d="M12.6 1.5c.9 3.6 5.4 6 5.4 11.4a6 6 0 0 1-12 0c0-3.2 1.9-4.6 2.3-7.4 1.3 1.1 2.2 2.6 2.5 4.4.9-2.7 1-5.4 1.8-8.4z"/></svg>
+      Piro web
+    </a>
+    <nav class="nav" aria-label="Hovedmeny">
+      <a href="#tjenester">Tjenester</a>
+      <a href="#prosess">Slik jobber vi</a>
+      <a href="#om-oss">Om oss</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <a class="btn btn-primary" href="#kontakt">Få et gratis tilbud</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Webbyrå for små og mellomstore bedrifter</p>
+        <h1>Nettsider med <em>glød</em> som gjør besøkende til kunder</h1>
+        <p class="lede">Piro web designer og bygger raske, moderne nettsider som er lette å finne på Google. Vi tar oss av alt fra design og tekst til drift, så du kan bruke tiden på det du er best på.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#kontakt">Book en uforpliktende prat</a>
+          <a class="btn btn-ghost" href="#kontakt">Få en gratis sjekk av nettsiden din</a>
+        </div>
+      </div>
+      <div class="browser" aria-label="Kvalitetsmål for nettsidene vi leverer">
+        <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="url">https://dinbedrift.no</div>
+        <div class="gauges">
+          <div class="gauge">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Ytelse 90 eller mer"><circle class="track" cx="50" cy="50" r="40"/><circle class="val" cx="50" cy="50" r="40" stroke-dasharray="226 251"/><text x="50" y="58" text-anchor="middle">90+</text></svg>
+            <span>Ytelse</span>
+          </div>
+          <div class="gauge">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Tilgjengelighet 95 eller mer"><circle class="track" cx="50" cy="50" r="40"/><circle class="val" cx="50" cy="50" r="40" stroke-dasharray="239 251"/><text x="50" y="58" text-anchor="middle">95+</text></svg>
+            <span>Tilgjengelighet</span>
+          </div>
+          <div class="gauge">
+            <svg viewBox="0 0 100 100" role="img" aria-label="SEO 95 eller mer"><circle class="track" cx="50" cy="50" r="40"/><circle class="val" cx="50" cy="50" r="40" stroke-dasharray="239 251"/><text x="50" y="58" text-anchor="middle">95+</text></svg>
+            <span>SEO</span>
+          </div>
+        </div>
+        <p class="browser-note">Målet for hver side vi leverer, målt med Google Lighthouse (skala 0–100).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="hvorfor">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Hvorfor velge Piro web</p>
+        <h2>Tre grunner til at kundene blir hos oss</h2>
+      </div>
+      <div class="why">
+        <article>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <h3>Raske sider som synes på Google</h3>
+          <p>Vi bygger for fart og søk fra første linje kode. Det betyr at flere finner deg, og at færre klikker seg bort før siden har lastet.</p>
+        </article>
+        <article>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg>
+          <h3>Fast pris, ingen overraskelser</h3>
+          <p>Du får en tydelig pris før vi starter. Ingen timer som tikker, og ingen ekstraregninger når siden er levert.</p>
+        </article>
+        <article>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0"/></svg>
+          <h3>Du eier alt</h3>
+          <p>Domene, innhold og kode er ditt. Ingen innlåsing, og du kan selv oppdatere tekster og bilder når du vil.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block services" id="tjenester">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Tjenester</p>
+        <h2>Alt du trenger for å lykkes på nett</h2>
+        <p class="lede">Velg det du trenger nå. Vi hjelper deg videre når bedriften vokser.</p>
+      </div>
+      <div class="svc-grid">
+        <div class="svc">
+          <h3>Nettsider</h3>
+          <p>Skreddersydd design som viser hvem du er, og som fungerer like godt på mobil som på PC.</p>
+          <ul><li>Design</li><li>Tekst</li><li>Mobilvennlig</li></ul>
+        </div>
+        <div class="svc">
+          <h3>Nettbutikk</h3>
+          <p>Selg varer og tjenester døgnet rundt, med betaling som kundene dine allerede bruker.</p>
+          <ul><li>Vipps</li><li>Kort</li><li>Lagerstyring</li></ul>
+        </div>
+        <div class="svc">
+          <h3>SEO og synlighet</h3>
+          <p>Vi hjelper deg opp i søkeresultatene, både i Norge og lokalt der kundene dine bor.</p>
+          <ul><li>Søkeord</li><li>Google Bedriftsprofil</li><li>Lokale søk</li></ul>
+        </div>
+        <div class="svc">
+          <h3>Drift og vedlikehold</h3>
+          <p>Vi holder siden oppdatert, sikker og rask, så du slipper å tenke på det.</p>
+          <ul><li>Oppdateringer</li><li>Sikkerhetskopi</li><li>Support</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="prosess">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Slik jobber vi</p>
+        <h2>Fra første prat til ferdig nettside</h2>
+      </div>
+      <ol class="steps">
+        <li><h3>Kartlegging</h3><p>Vi tar en prat om bedriften, kundene dine og hva siden skal oppnå.</p><small>Gratis og uforpliktende</small></li>
+        <li><h3>Design</h3><p>Du får se forslag til utseende og struktur, og gir tilbakemelding underveis.</p><small>Du godkjenner før vi bygger</small></li>
+        <li><h3>Utvikling</h3><p>Vi bygger siden, skriver tekstene og gjør den klar for Google.</p><small>Testet på mobil og PC</small></li>
+        <li><h3>Lansering</h3><p>Siden går live, og vi viser deg hvordan du oppdaterer den selv.</p><small>Oppfølging etter lansering</small></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap">
+      <div>
+        <h2>Klar for en nettside som jobber for deg?</h2>
+        <p>Fortell oss litt om bedriften din, så kommer vi tilbake med et forslag.</p>
+      </div>
+      <a class="btn btn-primary" href="#kontakt">Få et gratis tilbud</a>
+    </div>
+  </section>
+
+  <section class="block" id="om-oss">
+    <div class="wrap about">
+      <div>
+        <p class="eyebrow">Om oss</p>
+        <h2 style="font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800;letter-spacing:-.025em">Et lite byrå med stor glød</h2>
+        <p>Piro web ble startet for å gi små og mellomstore bedrifter de samme mulighetene på nett som de store. Vi tror på enkle løsninger, tydelig kommunikasjon og nettsider som faktisk gir resultater.</p>
+        <p>Hos oss får du én fast kontaktperson som kjenner prosjektet ditt. Ingen køer, ingen sjargong.</p>
+      </div>
+      <dl class="facts">
+        <div><dt>Hvem vi hjelper</dt><dd>Små og mellomstore bedrifter</dd></div>
+        <div><dt>Kontaktperson</dt><dd>Én fast, hele veien</dd></div>
+        <div><dt>Pris</dt><dd>Fast, avtalt på forhånd</dd></div>
+        <div><dt>Eierskap</dt><dd>Alt er ditt</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="block contact" id="kontakt">
+    <div class="wrap">
+      <div class="grid">
+        <div>
+          <p class="eyebrow">Kontakt</p>
+          <h2 style="font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800;letter-spacing:-.025em">La oss ta en prat</h2>
+          <p class="lede">Fyll ut skjemaet, så svarer vi innen én arbeidsdag. Det koster ingenting å spørre.</p>
+          <p class="contact-line">[din e-postadresse]</p>
+          <p class="contact-line">[ditt telefonnummer]</p>
+        </div>
+        <form id="kontaktskjema" novalidate>
+          <div class="row2">
+            <label for="navn">Navn<input id="navn" name="navn" autocomplete="name" required></label>
+            <label for="bedrift">Bedrift<input id="bedrift" name="bedrift" autocomplete="organization"></label>
+          </div>
+          <label for="epost">E-post<input id="epost" name="epost" type="email" autocomplete="email" required></label>
+          <label for="behov">Hva trenger du hjelp med?
+            <select id="behov" name="behov">
+              <option>Ny nettside</option>
+              <option>Fornye eksisterende nettside</option>
+              <option>Nettbutikk</option>
+              <option>SEO og synlighet</option>
+              <option>Drift og vedlikehold</option>
+            </select>
+          </label>
+          <label for="melding">Fortell litt om prosjektet<textarea id="melding" name="melding"></textarea></label>
+          <button class="btn btn-primary" type="submit">Send forespørsel</button>
+          <p class="form-msg" id="form-msg" role="status" hidden></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© Piro web · Org.nr. [fylles inn]</span>
+    <span>Nettsider · Nettbutikk · SEO · Drift</span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('kontaktskjema').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var msg = document.getElementById('form-msg');
+  var navn = document.getElementById('navn'), epost = document.getElementById('epost');
+  if (!navn.value.trim() || !epost.checkValidity() || !epost.value.trim()) {
+    msg.textContent = 'Fyll inn navn og en gyldig e-postadresse.';
+  } else {
+    // Koble skjemaet til e-post eller et skjema-API før lansering.
+    msg.textContent = 'Takk, ' + navn.value.trim() + '! Skjemaet er ikke koblet til e-post ennå, så ingenting er sendt.';
+  }
+  msg.hidden = false;
+});
+</script>
+<!--/BODY-->
+</body>
+</html>
